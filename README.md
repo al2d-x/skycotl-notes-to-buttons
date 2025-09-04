@@ -3,15 +3,22 @@
 Turn a song you downloaded from **Sky Music** into a clean, easy-to-read **button chart** for an Xbox controller.  
 You give the app an **HTML file** from <https://sky-music.github.io/>, it reads the notes, and it exports an HTML page that shows, bar by bar, **which buttons to press** (A, B, X, Y, D-pad, LT/RT/LB/RB, sticks) and when to **Rest**.
 
+> **Heads-up:** Some antivirus tools may flag the EXE as a virus. It isn’t.  
+> The code is public—check it yourself (or paste it into any AI/code review tool if you like).
+>
+> **Download (Windows):** https://github.com/al2d-x/skycotl-notes-to-buttons/releases/tag/v.1.0.0  
+> Grab **SkyCotlNotesToButtons.zip**, extract it, then double-click the EXE.  
+> Works on **Windows PC**.
+
 > Fan-made tool. Not affiliated with that website or the game developer.
 
 ---
 
 ## Download & Install (Windows)
 
-1. Go to the **Releases** page and download the latest ZIP.
-2. **Extract** the ZIP anywhere (e.g., your Desktop).
-3. Double-click **`SkyNotesToButtons.exe`** to start.
+1. Go to the **Releases** page and download the latest ZIP. (<https://github.com/al2d-x/skycotl-notes-to-buttons/releases/tag/v.1.0.0> click on SkyCotlNotesToButtons.zip)
+3. **Extract** the ZIP anywhere (e.g., your Desktop).
+4. Double-click **`SkyNotesToButtons.exe`** to start.
 
 No extra setup needed.
 
