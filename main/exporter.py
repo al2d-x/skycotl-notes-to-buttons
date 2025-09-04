@@ -74,11 +74,11 @@ def export_html_stack(mapping: ActiveMapOut,
     .card { flex: 0 0 120px; max-width:120px; background:transparent; border:1px solid #1b1e22; border-radius:12px; padding:6px; }
     .title { margin:0 0 6px; font-size:13px; color:#98f5c4; font-weight:700; opacity:.9; }
 
-    /* Small vertical stack of icons, no labels */
+    /* Small vertical stack of icons, no labels */ TO-DO: adjust here
     .stack { display:flex; flex-direction:column; gap:6px; padding:2px 0; }
     .icon  {
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       object-fit: contain;
       border-radius: 6px;
       background: #0f1113;
