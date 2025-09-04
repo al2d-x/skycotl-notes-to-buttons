@@ -16,7 +16,7 @@ You give the app an **HTML file** from <https://sky-music.github.io/>, it reads 
 
 ## Download & Install (Windows)
 
-1. Go to the **Releases** page and download the latest ZIP. (<https://github.com/al2d-x/skycotl-notes-to-buttons/releases/tag/v.1.0.0> click on SkyCotlNotesToButtons.zip)
+1. Go to the **Releases** page and download the latest ZIP. (<https://github.com/al2d-x/skycotl-notes-to-buttons/releases/tag/v.1.0.1> click on SkyCotlNotesToButtons.zip)
 3. **Extract** the ZIP anywhere (e.g., your Desktop).
 4. Double-click **`SkyNotesToButtons.exe`** to start.
 
@@ -64,6 +64,11 @@ If you are adventurous, you can **replace the PNG images** in the `ui/` folder w
 
 ### “It looks too small / too big.”
 Use **CTRL + Mouse Wheel** or **CTRL + + / −** in your browser.
+
+### Why does my song not work?
+Sometimes the HTML files you download from the Sky Music site are not exactly the same format. The site mixes different markup styles (old table.harp pages vs newer div.instr.harp pages), and occasionally a saved file is missing the expected section. When that happens the app can’t find the notes and shows nothing or wrong buttons. If you find another format open an "issues" ticket
+
+
 
 ---
 
