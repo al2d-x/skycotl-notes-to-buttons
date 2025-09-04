@@ -6,8 +6,6 @@ You give the app an **HTML file** from <https://sky-music.github.io/>, it reads 
 > **Heads-up:** Some antivirus tools may flag the EXE as a virus. It isn’t.  
 > The code is public—check it yourself (or paste it into any AI/code review tool if you like).
 >
-> **Download (Windows):** https://github.com/al2d-x/skycotl-notes-to-buttons/releases/tag/v.1.0.0  
-> Grab **SkyCotlNotesToButtons.zip**, extract it, then double-click the EXE.  
 > Works on **Windows PC**.
 
 > Fan-made tool. Not affiliated with that website or the game developer.
