@@ -1,14 +1,10 @@
-# loader.py
+#-# loader.py
 from __future__ import annotations
 from pathlib import Path
 from typing import Dict, List, Union
 import re
 
 from bs4 import BeautifulSoup
-
-# Hardcode your file path here (space in folder name is fine).
-# Change only this line when your input filename changes.
-HTML_FILE = r"C:\Projekte\load in\input.html"
 
 ActiveMap = Dict[int, Union[List[int], str]]
 
@@ -47,7 +43,7 @@ def _field_number_from_td(td, fallback_index: int) -> int:
 
 # --- public API ------------------------------------------------------------
 
-def load_active_map(html_path: str = HTML_FILE) -> ActiveMap:
+def load_active_map(html_path: str) -> ActiveMap:
     """
     Parse the HTML at html_path, anchor at <div id="transcript">,
     and return a map: { table_index: [active_field_numbers] }.

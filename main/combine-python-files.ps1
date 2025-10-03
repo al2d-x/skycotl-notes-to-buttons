@@ -31,7 +31,7 @@ $self = $MyInvocation.MyCommand.Name
 # Root folder for later relative‑path trimming
 $root = (Get-Location).Path + "\"            # include trailing slash
 
-# Loop through all .py files, depth‑first, skipping unwanted folders
+# Loop through all .py files, depth-first, skipping unwanted folders
 Get-ChildItem -Path . -Filter *.py -Recurse -File -ErrorAction SilentlyContinue |
     Where-Object {
         $_.Name -ne $self -and
@@ -39,14 +39,9 @@ Get-ChildItem -Path . -Filter *.py -Recurse -File -ErrorAction SilentlyContinue 
     } |
     Sort-Object FullName |
     ForEach-Object {
-
-        $file    = $_.FullName
-        $relPath = $file.Replace($root, "")       # header shows relative path
-
-        # Append a header, then the file’s content
-        Add-Content -Path $OutputFile -Encoding UTF8 `
-            -Value "`r`n$HeaderLine`r`n# File: $relPath`r`n$HeaderLine`r`n"
-        Get-Content -Path $file -Encoding UTF8 |
+        # Add a blank line between files for readability
+        Add-Content -Path $OutputFile -Encoding UTF8 -Value "`r`n"
+        Get-Content -Path $_.FullName -Encoding UTF8 |
             Add-Content -Path $OutputFile -Encoding UTF8
     }
 

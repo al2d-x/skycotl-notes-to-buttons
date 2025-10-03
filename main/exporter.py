@@ -3,53 +3,27 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict, List, Union, Optional
 import os
-
+from profiles import get_profile, ASSETS_DIR, Profile
 ActiveMapOut = Dict[int, Union[List[str], str]]
 
-# Folder layout:
-#   <repo>/
-#     main/ (this file)
-#     ui/   (icons)
-#     export/ (output html)
-ASSETS_DIR = (Path(__file__).resolve().parents[1] / "ui").resolve()
-
-# mapper labels -> file names in /ui
-LABEL_TO_FILE = {
-    "A": "A.png",
-    "B": "B.png",
-    "X": "X.png",
-    "Y": "Y.png",
-    "LB": "LB.png",
-    "RB": "RB.png",
-    "LT": "LT.png",
-    "RT": "RT.png",
-    "Dpad_Up": "Dpad_Up.png",
-    "Dpad_Down": "Dpad_Down.png",
-    "Dpad_Left": "Dpad_Left.png",
-    "Dpad_Right": "Dpad_Right.png",
-    "LeftStick_left": "LeftStick_left.png",
-    "RightStick_left": "RightStick_left.png",
-    "LeftStick_Right": "LeftStick_Right.png",
-}
-
-REST_LABEL = "Rest"  # what to show when nothing is played at that tact
-
-def _icon_src(label: str, out_dir: Path) -> Optional[str]:
-    """Return relative web path to icon or None if missing."""
-    fname = LABEL_TO_FILE.get(label, f"{label}.png")
-    p = ASSETS_DIR / fname
+def _icon_src(label: str, out_dir: Path, profile: Profile) -> Optional[str]:
+    """
+    Pfad zum Icon für 'label' auflösen:
+    1) Falls im Profil ein Mapping existiert -> dieses Dateiname im Profil-Unterordner.
+    2) Sonst Standard "<Label>.png" im Profil-Unterordner.
+    """
+    fname = profile.icon_files.get(label, f"{label}.png")
+    p = (ASSETS_DIR / profile.asset_subdir / fname).resolve()
     if not p.exists():
         return None
     return Path(os.path.relpath(p, out_dir)).as_posix()
 
 def export_html_stack(mapping: ActiveMapOut,
                       out_html: str | Path = None,
-                      title: str = "Harp Export") -> Path:
-    """
-    Responsive HTML, one compact card per note.
-    Inside each card: icons stacked vertically (no text).
-    Cards wrap to next row on resize.
-    """
+                      title: str = "Harp Export",
+                      profile: str = "xbox") -> Path:
+    prof = get_profile(profile)
+
     if out_html is None:
         out_html = Path(__file__).resolve().parents[1] / "export" / "export.html"
     out_html = Path(out_html)
@@ -59,63 +33,50 @@ def export_html_stack(mapping: ActiveMapOut,
     css = """
     * { box-sizing:border-box; }
     body { background:#1e242b; color:#dfe3e6; font-family:ui-sans-serif,system-ui,Segoe UI,Arial; margin:0; padding:18px; }
-    h1 { font-size:22px; margin:0 0 14px; font-weight:700; letter-spacing:.2px; }
+    h1 { font-size:22px; margin:0 0 4px; font-weight:700; letter-spacing:.2px; }
+    .sub { color:#9fb3c8; font-size:12px; margin:0 0 14px; opacity:.8; }
 
-    /* Use flex so cards keep a compact width and don't stretch, reducing empty space */
-    .wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-
-
-    /* Compact, subtle cards */
-    .card { flex: 0 0 120px; max-width:120px; background:transparent; border:1px solid #1b1e22; border-radius:12px; padding:6px; }
+    .wrap { display:flex; flex-wrap:wrap; gap:12px; }
+    .card { flex:0 0 120px; max-width:120px; background:transparent; border:1px solid #1b1e22; border-radius:12px; padding:6px; }
     .title { margin:0 0 6px; font-size:13px; color:#98f5c4; font-weight:700; opacity:.9; }
 
-    /* Small vertical stack of icons, no labels */ TO-DO: adjust here
     .stack { display:flex; flex-direction:column; gap:6px; padding:2px 0; }
-    .icon  {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      border-radius: 6px;
-      background: #0f1113;
-      box-shadow: 0 1px 1px rgba(0,0,0,.45);
-    }
+    .icon { width:80px; height:80px; object-fit:contain; border-radius:6px; background:#0f1113; box-shadow:0 1px 1px rgba(0,0,0,.45); }
 
-
-    /* 'Rest' placeholder: minimal + tasteful */
-    .rest { border:1px dashed #2a2f34; border-radius:8px; padding:8px;
-            color:#8b929a; font-style:italic; text-align:center; font-size:12px; }
+    .badge { display:flex; align-items:center; justify-content:center;
+             width:80px; height:80px; border-radius:6px; background:#0f1113;
+             border:1px solid #2a2f34; font-weight:700; font-size:22px; }
+    .rest { border:1px dashed #2a2f34; border-radius:8px; padding:8px; color:#8b929a; font-style:italic; text-align:center; font-size:12px; }
     footer { margin-top:12px; font-size:12px; color:#8b929a; }
     """
 
     html: List[str] = []
     html.append("<!doctype html><html><head><meta charset='utf-8'>")
     html.append(f"<title>{title}</title><style>{css}</style></head><body>")
-    html.append(f"<h1>{title}</h1><div class='wrap'>")
+    html.append(f"<h1>{title}</h1>")
+    html.append(f"<div class='sub'>Profile: {prof.label}</div>")
+    html.append("<div class='wrap'>")
 
     for t_idx in sorted(mapping.keys()):
         val = mapping[t_idx]
         html.append("<div class='card'>")
-        html.append(f"<div class='title'>Bar {t_idx}</div>")  # Table -> Bar
+        html.append(f"<div class='title'>Bar {t_idx}</div>")
 
         if val == "noValue":
-            html.append(f"<div class='rest'>{REST_LABEL}</div>")  # noValue -> Rest
+            html.append(f"<div class='rest'>{prof.rest_label}</div>")
         else:
             html.append("<div class='stack'>")
-            for label in val:  # keep mapper order
-                src = _icon_src(label, out_dir)
+            for label in val:
+                src = _icon_src(label, out_dir, prof)
                 if src:
                     html.append(f"<img class='icon' src='{src}' alt='{label}' title='{label}' />")
                 else:
-                    # no text fallback (as requested) -> render an empty spacer
-                    html.append("<span class='icon' aria-hidden='true'></span>")
-            html.append("</div>")  # .stack
-
-        html.append("</div>")  # .card
+                    if prof.text_fallback:
+                        html.append(f"<div class='badge' title='{label}'>{label}</div>")
+                    else:
+                        html.append("<span class='icon' aria-hidden='true'></span>")
+            html.append("</div>")
+        html.append("</div>")
 
     html.append("</div><footer>Generated by exporter.py</footer></body></html>")
     out_html.write_text("".join(html), encoding="utf-8")
