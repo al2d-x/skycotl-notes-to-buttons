@@ -1,24 +1,30 @@
-#-# mapper.py
+#main/mapper.py
+"""
+Mapping / normalization
+=======================
+Normalizes loaded active maps:
+- keeps only integers 1..15
+- sorts and de-duplicates
+- converts empty bars to "noValue"
+"""
+
+
 from __future__ import annotations
 from typing import Dict, List, Union
-from profiles import get_profile
 
 ActiveMapIn  = Dict[int, Union[List[int], str]]
-ActiveMapOut = Dict[int, Union[List[str], str]]
+ActiveMapOut = Dict[int, Union[List[int], str]]
 
-def map_active_map(active_map: ActiveMapIn, profile: str = "xbox") -> ActiveMapOut:
+def map_active_map(active_map: ActiveMapIn, profile: str = "") -> ActiveMapOut:
     """
-    Convert {table_idx: [field_numbers]} -> {table_idx: [labels]} using the
-    chosen profile. 'noValue' is preserved.
+    Mapping is number-preserving. We simply sanitize to 1..15 and sort/dedupe.
+    ('profile' kept for signature compatibility.)
     """
-    prof = get_profile(profile)
-    table = prof.field_labels
-
     mapped: ActiveMapOut = {}
-    for table_idx, value in active_map.items():
+    for idx, value in active_map.items():
         if value == "noValue":
-            mapped[table_idx] = "noValue"
+            mapped[idx] = "noValue"
             continue
-        labels = [table[n] for n in value if 0 < n < len(table)]
-        mapped[table_idx] = labels if labels else "noValue"
+        clean = sorted({n for n in value if isinstance(n, int) and 1 <= n <= 15})
+        mapped[idx] = clean if clean else "noValue"
     return mapped

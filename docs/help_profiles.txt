@@ -1,0 +1,14 @@
+Profile Naming (1–15)
+A Profile Name has the following components: device_author
+
+A Profile has pngs 1-16
+Each exported chart uses a visual layout based on numbered button images (1.png through 15.png).
+These numbers represent controller or keyboard positions as defined by each profile folder in /sntb-ui/.
+
+For example:
+  - 1.png might be “LT” on Xbox, “L2” on PlayStation, or “ZL” on Switch.
+  - 4.png could be “A” on Xbox, “Cross (✕)” on PlayStation, or “B” on Switch.
+  - The profile determines how notes are displayed.
+
+To view which assets or button icons were used for each profile, see:
+Help → Licenses

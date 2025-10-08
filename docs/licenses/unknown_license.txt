@@ -1,0 +1,15 @@
+Xbox Series X Button Icons – License Notice (Temporary)
+
+The license information for this icon set is currently unavailable.
+
+If you are the creator of these assets, or if you know the original source and license terms,
+please contact us so that proper attribution can be provided.
+
+We respect and value creators’ rights and are happy to credit, reference,
+and comply with the appropriate license terms once verified.
+
+Usage in this project:
+ - xbox_unknown
+
+For corrections or licensing details, please reach out on GitHub:
+https://github.com/al2d-x/skycotl-notes-to-buttons

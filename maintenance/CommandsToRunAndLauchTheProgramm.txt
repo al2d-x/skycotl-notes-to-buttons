@@ -1,0 +1,3 @@
+cd C:\Informatik\VSCODE\skycotl-notes-to-buttons   
+
+ .\.venv\Scripts\python -m main  

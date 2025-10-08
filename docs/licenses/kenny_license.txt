@@ -1,0 +1,21 @@
+Kenney Input Prompts – License Notice
+
+Author: Kenney
+Source: https://kenney.nl/assets/input-prompts
+License: CC0 1.0 Universal (Public Domain)
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Summary:
+This work is released into the public domain. You may use, modify, and redistribute it freely,
+for personal, educational, or commercial purposes.
+
+No attribution is required, but it is appreciated.
+
+Usage in this project:
+ - xbox_kenny
+ - ps_kenny
+ - keyboard_eng_kenny
+ - keyboard_ger_kenny
+
+These profiles use assets or derivatives of Kenney’s “Input Prompts” collection,
+which provides generic controller and keyboard button icons.

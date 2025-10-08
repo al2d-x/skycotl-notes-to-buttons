@@ -1,1 +1,52 @@
-main/combined_python.txt
+# --- Python bytecode / caches ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytype/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.dmypy.json
+.pyre/
+
+# --- Virtual environments (never commit) ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- Packaging / build output ---
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+wheels/
+share/python-wheels/
+MANIFEST
+
+# --- Coverage / test artifacts ---
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# --- Editors / IDEs ---
+.vscode/
+.idea/
+*.code-workspace
+
+# --- OS clutter ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Project-specific outputs ---
+export/
+maintenance/*report-*.txt
+maintenance/project-structure*.txt
+maintenance/combined_python*.txt
+
+*.zip
+*.exe

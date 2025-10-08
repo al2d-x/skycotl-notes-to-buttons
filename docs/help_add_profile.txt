@@ -1,0 +1,18 @@
+How to Add a Profile
+
+Profiles live in the “sntb-ui” folder. Each profile is a subfolder that contains
+numbered icon images 1.png through 15.png.
+
+Steps:
+ 1) Open Help → Open profiles folder.
+ 2) Create a new subfolder; the folder name becomes the profile name shown in the app.
+ 3) Put your numbered images inside:
+       1.png  …  15.png
+    From Ingame: Top-left is 1, bottom-right is 15.
+ 5) Restart the app so it discovers your new profile.
+
+Tips:
+ • Copy an existing profile and replace the images as a starting point.
+ • Use Help → Validate selected profile to see if any icons are missing or out of range.
+ • Attribution: If you use third-party icons, make sure you comply with their license.
+   See Help → Licenses for examples.

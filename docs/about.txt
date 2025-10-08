@@ -1,0 +1,16 @@
+Sky: Notes → Buttons
+
+Converts saved HTML sheets from “Sky Music Sheets” (https://sky-music.github.io/) into
+controller or keyboard button charts for Sky: Children of the Light.
+
+This fan-made tool is not affiliated with thatgamecompany or the developers of Sky.
+
+Usage:
+ - Choose a saved HTML music sheet from Sky Music.
+ - Pick a matching button profile (Xbox, PlayStation, Switch, or Keyboard layout).
+ - Click Start to generate a button chart version.
+
+You can view attribution details for icon sets under Help → Licenses.
+
+Source code:
+https://github.com/al2d-x/skycotl-notes-to-buttons

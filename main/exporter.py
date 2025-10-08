@@ -1,27 +1,38 @@
-# exporter.py
+#main/exporter.py
+
+"""
+HTML exporter
+=============
+Builds a static HTML page representing the mapped bars using a selected
+icon profile. Resolves relative paths to numbered PNG icons.
+
+Exports:
+- export_html_stack(mapping, out_html, title, profile) -> Path
+"""
+
+
 from __future__ import annotations
 from pathlib import Path
 from typing import Dict, List, Union, Optional
 import os
-from profiles import get_profile, ASSETS_DIR, Profile
-ActiveMapOut = Dict[int, Union[List[str], str]]
+import logging
 
-def _icon_src(label: str, out_dir: Path, profile: Profile) -> Optional[str]:
-    """
-    Pfad zum Icon für 'label' auflösen:
-    1) Falls im Profil ein Mapping existiert -> dieses Dateiname im Profil-Unterordner.
-    2) Sonst Standard "<Label>.png" im Profil-Unterordner.
-    """
-    fname = profile.icon_files.get(label, f"{label}.png")
-    p = (ASSETS_DIR / profile.asset_subdir / fname).resolve()
-    if not p.exists():
+from profiles import get_profile, Profile
+
+ActiveMapOut = Dict[int, Union[List[int], str]]
+
+def _icon_src(num: int, out_dir: Path, profile: Profile) -> Optional[str]:
+    """Resolve relative path to <profile>/<num>.png, or None if missing."""
+    p = profile.icon_path(num)
+    if not p:
         return None
     return Path(os.path.relpath(p, out_dir)).as_posix()
 
 def export_html_stack(mapping: ActiveMapOut,
                       out_html: str | Path = None,
                       title: str = "Harp Export",
-                      profile: str = "xbox") -> Path:
+                      profile: str = "") -> Path:
+    """Write the export HTML and return its path."""
     prof = get_profile(profile)
 
     if out_html is None:
@@ -29,6 +40,8 @@ def export_html_stack(mapping: ActiveMapOut,
     out_html = Path(out_html)
     out_dir = out_html.parent
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    logging.info("Generating HTML (%s) with profile '%s'", out_html, prof.key)
 
     css = """
     * { box-sizing:border-box; }
@@ -66,8 +79,9 @@ def export_html_stack(mapping: ActiveMapOut,
             html.append(f"<div class='rest'>{prof.rest_label}</div>")
         else:
             html.append("<div class='stack'>")
-            for label in val:
-                src = _icon_src(label, out_dir, prof)
+            for num in val:  # numbers 1..15
+                src = _icon_src(num, out_dir, prof)
+                label = prof.display_name_for(num)
                 if src:
                     html.append(f"<img class='icon' src='{src}' alt='{label}' title='{label}' />")
                 else:
