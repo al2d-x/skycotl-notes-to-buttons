@@ -21,12 +21,12 @@ import webbrowser, sys
 from services.conversion import ConversionService
 from docs.service import DocsService
 from ui.dialogs import show_text_dialog
+from main import __version__ as APP_VERSION
 
 # profiles
 from profiles import PROFILES, get_profile_report, refresh_profiles, ASSETS_DIR
 
 APP_TITLE   = "Sky: Notes → Buttons"
-APP_VERSION = "2.0.0"
 
 # Point this at your repo (or releases page directly)
 GITHUB_REPO_URL     = "https://github.com/<you>/skycotl-notes-to-buttons"
@@ -42,7 +42,6 @@ except Exception:
     USING_BOOTSTRAP = False
 
 APP_TITLE   = "Sky: Notes → Buttons"
-APP_VERSION = "2.0.0"
 
 class App(tk.Tk):
     def __init__(self, conversion: ConversionService, docs: DocsService):

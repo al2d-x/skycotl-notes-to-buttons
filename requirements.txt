@@ -1,0 +1,2 @@
+beautifulsoup4>=4.12
+ttkbootstrap>=1.10 ; platform_system=="Windows"
