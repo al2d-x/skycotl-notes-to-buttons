@@ -29,7 +29,7 @@ from profiles import PROFILES, get_profile_report, refresh_profiles, ASSETS_DIR
 APP_TITLE   = "Sky: Notes → Buttons"
 
 # Point this at your repo (or releases page directly)
-GITHUB_REPO_URL     = "https://github.com/<you>/skycotl-notes-to-buttons"
+GITHUB_REPO_URL     = "https://github.com/al2d-x/skycotl-notes-to-buttons"
 GITHUB_RELEASES_URL = f"{GITHUB_REPO_URL}/releases"
 
 # ttkbootstrap (optional)

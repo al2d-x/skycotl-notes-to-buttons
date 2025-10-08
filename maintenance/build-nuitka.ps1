@@ -2,7 +2,7 @@
     Usage:
       powershell -ExecutionPolicy Bypass -File .\maintenance\build-nuitka.ps1
       powershell -File .\maintenance\build-nuitka.ps1 -Clean
-      powershell -File .\maintenance\build-nuitka.ps1 -OneFile   # optional alt mode
+      powershell -File .\maintenance\build-nuitka.ps1 -OneFile   # optional
 #>
 
 [CmdletBinding()]
@@ -39,10 +39,19 @@ if ($Clean -and (Test-Path $OutDir)) {
 # --- Common flags
 $ExeName   = 'SkyNotesToButtons.exe'
 $IconPath  = Join-Path $ProjectRoot 'assets\scotl_minimalist.ico'
+
+# NOTE:
+# - Use __main__.py as entry script (no '-m main') to avoid the '-m' option conflict.
+# - Hide console with --windows-console-mode=disable (GUI app).
 $Flags = @(
   '--standalone',
   '--enable-plugin=tk-inter',
   '--include-package=bs4',
+  '--include-package=ttkbootstrap',
+  '--include-package=services',
+  '--include-package=profiles',
+  '--include-package=ui',
+  '--include-package=docs',
   '--include-data-dir=assets=assets',
   '--include-data-dir=sntb-ui=sntb-ui',
   '--include-data-dir=docs=docs',
@@ -55,7 +64,8 @@ $Flags = @(
   '--windows-console-mode=disable',
   "--output-dir=$OutDir",
   '--remove-output',
-  "--output-filename=$ExeName"
+  "--output-filename=$ExeName",
+  '--assume-yes-for-downloads'  # auto-grab MSVC redist if needed
 )
 
 if ($OneFile) {
@@ -72,12 +82,16 @@ if ($LASTEXITCODE -ne 0) { throw "Nuitka failed with exit code $LASTEXITCODE" }
 
 # --- Result path
 if ($OneFile) {
-  $ExePath = Join-Path $OutDir 'SkyNotesToButtons.exe'
+  # OneFile outputs directly under $OutDir
+  $ExePath = Join-Path $OutDir $ExeName
 } else {
-  $ExePath = Join-Path $OutDir 'main.dist\SkyNotesToButtons.exe'
+  # Standalone puts it under <entryname>.dist
+  $ExePath = Join-Path $OutDir ("{0}.dist\{1}" -f ([IO.Path]::GetFileNameWithoutExtension($Entry)), $ExeName)
 }
+
 if (-not (Test-Path $ExePath)) {
-  $ExePath = Get-ChildItem -Recurse -Path $OutDir -Filter $ExeName -File -ErrorAction SilentlyContinue | Select-Object -First 1 | ForEach-Object FullName
+  $ExePath = Get-ChildItem -Recurse -Path $OutDir -Filter $ExeName -File -ErrorAction SilentlyContinue |
+             Select-Object -First 1 | ForEach-Object FullName
 }
 
 if ($ExePath) {

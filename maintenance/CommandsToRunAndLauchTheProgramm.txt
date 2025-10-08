@@ -1,3 +1,29 @@
 cd C:\Informatik\VSCODE\skycotl-notes-to-buttons   
 
  .\.venv\Scripts\python -m main  
+
+ .\.venv\Scripts\Activate.ps1 
+
+ python -m nuitka `
+  --standalone `
+  --enable-plugin=tk-inter `
+  --include-package=bs4 `
+  --include-package=ttkbootstrap `
+  --include-package=services `
+  --include-package=profiles `
+  --include-package=ui `
+  --include-package=docs `
+  --include-data-dir=assets=assets `
+  --include-data-dir=sntb-ui=sntb-ui `
+  --include-data-dir=docs=docs `
+  --windows-icon-from-ico=assets\scotl_minimalist.ico `
+  --windows-company-name="al2d-x" `
+  --windows-product-name="Sky: Notes → Buttons" `
+  --windows-file-description="Convert Sky Music HTML to controller/keyboard charts" `
+  --windows-file-version=2.0.0 `
+  --windows-product-version=2.0.0 `
+  --windows-console-mode=disable `
+  --output-dir=build `
+  --remove-output `
+  --output-filename=SkyNotesToButtons.exe `
+  .\main\__main__.py
