@@ -1,85 +1,157 @@
 # Sky: Notes → Buttons
 
-Turn a song you downloaded from **Sky Music** into a clean, easy-to-read **button chart** for an Xbox controller.  
-You give the app an **HTML file** from <https://sky-music.github.io/>, it reads the notes, and it exports an HTML page that shows, bar by bar, **which buttons to press** (A, B, X, Y, D-pad, LT/RT/LB/RB, sticks) and when to **Rest**.
+Turn a song you downloaded from **Sky Music** into a clean, easy-to-read **button chart** for controllers (Xbox / PlayStation / Switch) or **keyboard**.
+You give the app an **HTML file** from [https://sky-music.github.io/](https://sky-music.github.io/), it reads the notes, and it exports a page that shows, bar by bar, **which buttons to press** and when to **Rest**.
 
-> **Heads-up:** Some antivirus tools may flag the EXE as a virus. It isn’t.  
-> The code is public—check it yourself (or paste it into any AI/code review tool if you like).
->
-> Works on **Windows PC**.
+<img width="4153" height="981" alt="Unbenanntes Diagramm drawio" src="https://github.com/user-attachments/assets/8c06714b-739d-412c-8dde-dc237b5b30fc" />
 
-> Fan-made tool. Not affiliated with that website or the game developer.
 
----
-
-## Download & Install (Windows)
-
-1. Go to the **Releases** page and download the latest ZIP. (<https://github.com/al2d-x/skycotl-notes-to-buttons/releases/tag/v.1.0.1> click on SkyCotlNotesToButtons.zip)
-3. **Extract** the ZIP anywhere (e.g., your Desktop).
-4. Double-click **`SkyNotesToButtons.exe`** to start.
-
-No extra setup needed.
+> Fan-made tool for **Sky: Children of the Light**. Not affiliated with the website or game developers.
+> Works **offline** once you have the HTML file.
 
 ---
 
-## How to Use
+## ✨ What’s new in 2.0
 
-1. On <https://sky-music.github.io/> pick a song and **download/save the HTML** for it.
- <img width="1248" height="731" alt="image" src="https://github.com/user-attachments/assets/56b8c6df-7436-4b1d-af52-e946cf0b8fa1" />
- <img width="725" height="127" alt="image" src="https://github.com/user-attachments/assets/0e9ff297-415d-4b9f-9533-80e98ff4956f" />
- <img width="1540" height="899" alt="image" src="https://github.com/user-attachments/assets/1208cd85-a269-49e5-a2dd-f9192ffa1838" />
-
- 
-2. Open **Sky: Notes → Buttons**.
-3. Click **Browse…** next to **Input HTML** and pick the file you saved.
-4. Click **Browse…** next to **Export to** and choose where to save the result.
-5. Press **Start**.
-6. When it’s done, you can open the exported HTML in your browser.
-
-### Output
-- You get an **HTML file**.  
-- If an accompanying **`ui/` folder** appears next to it, **keep it together** with the HTML when you move or upload the file (it contains the button images).
-
-### Zoom
-- Use **CTRL + Mouse Wheel** or **CTRL + + / −** in your browser to make the buttons bigger or smaller.
+* **Multiple layouts (profiles):** Xbox, PlayStation, Switch, and Keyboard (EN/DE).
+* **Profile validation:** quickly see if a profile is missing icons.
+* **Help inside the app:** About, Profile naming, How to add a profile, and Licenses.
+* **Version menu:** opens the GitHub Releases page (no auto-update, no internet checks).
+* **Cleaner export:** simple, readable HTML with icon fallbacks if images are missing.
 
 ---
 
-## FAQ
+## 📥 Download & Install (Windows)
 
-### “Why is the download ~40 MB?”
-It’s a packaged Python app (PyInstaller). It includes the Python runtime and libraries so you don’t have to install anything. That’s normal size for a small Python GUI app.
+1. Go to **Releases** and download the latest ZIP.
+   [https://github.com/al2d-x/skycotl-notes-to-buttons/releases](https://github.com/al2d-x/skycotl-notes-to-buttons/releases)
+2. **Extract** the ZIP anywhere (e.g., Desktop).
+3. Double-click **`SkyNotesToButtons.exe`** to start.
+   *No extra setup needed.*
 
-### “Can’t you make it smaller?”
-Maybe later. Shrinking means carefully excluding libraries and testing a lot; easy to break things. Stability first. 🙂
-
-### “Why does the UI look simple?”
-Because function > fashion. I’m a backend person. The UI is intentionally minimal so it’s fast and clear.
-
-### “Why only Xbox buttons?”
-The first version targets the Xbox layout. Because i have an xbox controller. I might add other layouts later.  
-If you are adventurous, you can **replace the PNG images** in the `ui/` folder with your own, but **keep the same file names** (e.g., `A.png`, `LT.png`).
-
-### “It looks too small / too big.”
-Use **CTRL + Mouse Wheel** or **CTRL + + / −** in your browser.
-
-### Why does my song not work?
-Sometimes the HTML files you download from the Sky Music site are not exactly the same format. The site mixes different markup styles (old table.harp pages vs newer div.instr.harp pages), and occasionally a saved file is missing the expected section. When that happens the app can’t find the notes and shows nothing or wrong buttons. If you find another format open an "issues" ticket
-
-
+> Some antivirus tools flag small indie EXEs. This one is clean. The code is public—feel free to review it.
 
 ---
 
-## Notes & Tips
+## 🚀 Quick Start
 
-- The app looks for the notes under a special section in the HTML (`<div id="transcript">`). If the file is not from the Sky Music site or it’s edited, it may not parse.
-- If a bar has no notes, you'll see **“Rest”** in that bar.
-- Works offline once you have the HTML file.
+1. On [https://sky-music.github.io/](https://sky-music.github.io/) pick a song and **download/save the HTML** for it.
+<img width="1450" height="759" alt="image" src="https://github.com/user-attachments/assets/6a463d7f-c2d3-468f-8c91-c09195502b9f" />
+<img width="589" height="133" alt="image" src="https://github.com/user-attachments/assets/41d8edeb-2e17-4e6f-b6f9-ffae0e37822d" />
+<img width="1545" height="723" alt="image" src="https://github.com/user-attachments/assets/d9ea97e8-6217-4699-aa5f-6266bc3149ae" />
+
+3. Open **Sky: Notes → Buttons**.
+4. Click **Browse…** next to **Input HTML** and pick the file you saved.
+5. Choose an **icon profile** (e.g., Xbox, PS, Switch, Keyboard).
+6. Click **Browse…** next to **Export to** and choose where to save.
+7. Press **Start**.
+8. When it’s done, open the exported HTML in your browser.
+
+**Zoom the chart:** use **CTRL + Mouse Wheel** or **CTRL + + / −** in your browser.
 
 ---
 
-## License & Credits
+## 🗂️ Output
 
-- Fan tool for **Sky: Children of the Light** players.
-- Not affiliated with the game or the Sky Music website.
-- Code is open for learning and personal use.
+* You get one **HTML file** with a tidy grid of bars.
+* Each bar shows a vertical stack of button icons (or a **Rest** label).
+* If icon files aren’t found, the app shows **text badges** (fallback), so the chart is still usable.
+
+> Tip: If you move the exported HTML elsewhere and your icons disappear, export again near your **`sntb-ui/`** icon folders, or copy the relevant profile folder along with the HTML (keeping the same structure).
+
+---
+
+## 🎛 Profiles (Layouts)
+
+Choose from built-in profiles (examples):
+
+* `xbox_kenny`, `xbox_zacksly`, `xbox_unknown`
+* `ps_kenny`, `ps_zacksly`
+* `switch_zacksly`
+* `keyboard_eng_kenny`, `keyboard_ger_kenny`
+
+### Add your own profile
+
+1. In the app: **Help → Open profiles folder** (this points to `sntb-ui/`).
+2. Create a new subfolder (its name becomes the profile name in the app).
+3. Add **`1.png … 15.png`** (top-left to bottom-right notes ingame).
+4. In the app: **Help → Validate selected profile** to check for missing/out-of-range files.
+
+---
+
+## ❓ FAQ
+
+**Does it auto-update?**
+No. The app shows **Help → Version…** which **opens the Releases page** in your browser. No internet checks, no automatic downloads.
+
+**It looks too small / too big.**
+Use **CTRL + Mouse Wheel** (or **CTRL + + / −**) in your browser.
+
+**My song didn’t parse.**
+The Sky Music site has a few HTML formats. This app expects notes under `<div id="transcript">`. If a saved file is different or incomplete, parsing can fail. Try another copy of the song or open an issue with the HTML attached.
+
+**The icons don’t show.**
+Make sure the exported HTML can find the profile images. Export next to your `sntb-ui/` folder, or keep the profile folder with the HTML. If images are missing, the app shows **text labels** as a fallback.
+
+**profile for my future input devices are missing.**
+Do it yourself
+---
+
+## 🔒 Privacy
+
+* Works **offline**.
+* The app **never uploads** your files anywhere.
+* it never collects any data
+* Licenses for icon sets are included and viewable under **Help → Licenses**.
+
+---
+
+## 🛠️ Build from Source (advanced)
+
+If you don’t want the EXE, you can run from source:
+
+```powershell
+# In PowerShell
+git clone https://github.com/al2d-x/skycotl-notes-to-buttons.git
+cd skycotl-notes-to-buttons
+py -3.12 -m venv .venv
+.\.venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python -m main
+```
+
+> If `requirements.txt` isn’t present, install dependencies shown in the repo (e.g., `beautifulsoup4`, optionally `ttkbootstrap`), then run `python -m main`.
+
+---
+
+## 🧭 Roadmap
+
+* User  “print-friendly” export
+* Better handling of alternate Sky Music HTML formats and Exports from other websites
+
+Have ideas? Open an **Issue**!
+---
+
+## 📜 License & Credits
+
+* This is a fan tool for **Sky: Children of the Light** players.
+* Not affiliated with thatgamecompany or the Sky Music website.
+* Icon sets and their licenses are credited under **Help → Licenses** in the app (and in `/docs/licenses/`).
+
+  * Kenney Input Prompts (CC0)
+  * Zacksly Icons (CC BY 3.0)
+  * Additional sets noted where used
+
+---
+
+## 💬 Support
+
+* Found a bug or a song that won’t parse?
+  Please open an **Issue** with:
+
+  * The **input HTML** (attach the file)
+  * A short description (what you expected vs. what happened)
+  * If relevant, your chosen **profile** and the exported HTML result
+
+Thanks for trying **Sky: Notes → Buttons**! 🎶🎮
