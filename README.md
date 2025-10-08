@@ -81,9 +81,6 @@ Choose from built-in profiles (examples):
 
 ## ❓ FAQ
 
-**Why is the download ~40 MB?**
-The EXE bundles Python and libraries so you don’t have to install anything. That size is normal for a small Python GUI app.
-
 **Does it auto-update?**
 No. The app shows **Help → Version…** which **opens the Releases page** in your browser. No internet checks, no automatic downloads.
 
@@ -96,7 +93,7 @@ The Sky Music site has a few HTML formats. This app expects notes under `<div id
 **The icons don’t show.**
 Make sure the exported HTML can find the profile images. Export next to your `sntb-ui/` folder, or keep the profile folder with the HTML. If images are missing, the app shows **text labels** as a fallback.
 
-**profile for my ps6 are missing.**
+**profile for my future input devices are missing.**
 Do it yourself
 ---
 
@@ -104,6 +101,7 @@ Do it yourself
 
 * Works **offline**.
 * The app **never uploads** your files anywhere.
+* it never collects any data
 * Licenses for icon sets are included and viewable under **Help → Licenses**.
 
 ---
