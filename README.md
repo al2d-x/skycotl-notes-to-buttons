@@ -3,6 +3,9 @@
 Turn a song you downloaded from **Sky Music** into a clean, easy-to-read **button chart** for controllers (Xbox / PlayStation / Switch) or **keyboard**.
 You give the app an **HTML file** from [https://sky-music.github.io/](https://sky-music.github.io/), it reads the notes, and it exports a page that shows, bar by bar, **which buttons to press** and when to **Rest**.
 
+<img width="4153" height="981" alt="Unbenanntes Diagramm drawio" src="https://github.com/user-attachments/assets/8c06714b-739d-412c-8dde-dc237b5b30fc" />
+
+
 > Fan-made tool for **Sky: Children of the Light**. Not affiliated with the website or game developers.
 > Works **offline** once you have the HTML file.
 
