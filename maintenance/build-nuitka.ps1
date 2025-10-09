@@ -11,6 +11,7 @@ param(
   [switch]$OneFile
 )
 
+Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 # --- Paths
@@ -18,17 +19,22 @@ $ScriptDir   = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectRoot = (Resolve-Path (Join-Path $ScriptDir '..')).Path
 $VenvPy      = Join-Path $ProjectRoot '.venv\Scripts\python.exe'
 $OutDir      = Join-Path $ProjectRoot 'build'
+$AssetsDir   = Join-Path $ProjectRoot 'assets'
+$UiDir       = Join-Path $ProjectRoot 'sntb-ui'
+$DocsDir     = Join-Path $ProjectRoot 'docs'
+$IconPath    = Join-Path $AssetsDir 'scotl_minimalist.ico'
+$Entry       = Join-Path $ProjectRoot 'main\__main__.py'
+$ExeName     = 'SkyNotesToButtons.exe'
 
-if (-not (Test-Path $VenvPy)) {
-  throw "Virtualenv Python not found: $VenvPy"
-}
+if (-not (Test-Path $VenvPy)) { throw "Virtualenv Python not found: $VenvPy" }
+if (-not (Test-Path $Entry))  { throw "Entry point not found: $Entry" }
 
 # --- Version (read from main/__init__.py)
 $VersionFile = Join-Path $ProjectRoot 'main\__init__.py'
 if (-not (Test-Path $VersionFile)) { throw "Missing version file: $VersionFile" }
-$VersionLine = (Get-Content $VersionFile -Raw) -split "`r?`n" | Where-Object { $_ -match '__version__\s*=\s*' } | Select-Object -First 1
-if (-not $VersionLine -or ($VersionLine -notmatch "'|`"")) { throw "Could not read __version__ from $VersionFile" }
-$AppVersion = ($VersionLine -split '["'']')[1]
+$verMatch = [regex]::Match((Get-Content $VersionFile -Raw), "(?m)^__version__\s*=\s*['""]([^'""]+)['""]\s*$")
+if (-not $verMatch.Success) { throw "Could not read __version__ from $VersionFile" }
+$AppVersion = $verMatch.Groups[1].Value
 
 # --- Clean
 if ($Clean -and (Test-Path $OutDir)) {
@@ -36,13 +42,12 @@ if ($Clean -and (Test-Path $OutDir)) {
   Remove-Item -Recurse -Force $OutDir
 }
 
-# --- Common flags
-$ExeName   = 'SkyNotesToButtons.exe'
-$IconPath  = Join-Path $ProjectRoot 'assets\scotl_minimalist.ico'
+# --- Ensure data dirs exist
+foreach ($p in @($AssetsDir, $UiDir, $DocsDir)) {
+  if (-not (Test-Path $p)) { throw "Required data directory missing: $p" }
+}
 
-# NOTE:
-# - Use __main__.py as entry script (no '-m main') to avoid the '-m' option conflict.
-# - Hide console with --windows-console-mode=disable (GUI app).
+# --- Flags
 $Flags = @(
   '--standalone',
   '--enable-plugin=tk-inter',
@@ -52,9 +57,9 @@ $Flags = @(
   '--include-package=profiles',
   '--include-package=ui',
   '--include-package=docs',
-  '--include-data-dir=assets=assets',
-  '--include-data-dir=sntb-ui=sntb-ui',
-  '--include-data-dir=docs=docs',
+  "--include-data-dir=$AssetsDir=assets",
+  "--include-data-dir=$UiDir=sntb-ui",
+  "--include-data-dir=$DocsDir=docs",
   "--windows-icon-from-ico=$IconPath",
   '--windows-company-name=al2d-x',
   "--windows-product-name=Sky: Notes → Buttons",
@@ -65,34 +70,19 @@ $Flags = @(
   "--output-dir=$OutDir",
   '--remove-output',
   "--output-filename=$ExeName",
-  '--assume-yes-for-downloads'  # auto-grab MSVC redist if needed
+  '--assume-yes-for-downloads'
 )
+if ($OneFile) { $Flags += '--onefile' }
 
-if ($OneFile) {
-  $Flags += '--onefile'
-}
-
-# --- Build command
-$Entry = Join-Path $ProjectRoot 'main\__main__.py'
-$Args  = @('-m', 'nuitka') + $Flags + @($Entry)
-
+# --- Build
+$Args = @('-m','nuitka') + $Flags + @($Entry)
 Write-Host "Building v$AppVersion (OneFile: $OneFile)..." -ForegroundColor Cyan
 & $VenvPy $Args
 if ($LASTEXITCODE -ne 0) { throw "Nuitka failed with exit code $LASTEXITCODE" }
 
-# --- Result path
-if ($OneFile) {
-  # OneFile outputs directly under $OutDir
-  $ExePath = Join-Path $OutDir $ExeName
-} else {
-  # Standalone puts it under <entryname>.dist
-  $ExePath = Join-Path $OutDir ("{0}.dist\{1}" -f ([IO.Path]::GetFileNameWithoutExtension($Entry)), $ExeName)
-}
-
-if (-not (Test-Path $ExePath)) {
-  $ExePath = Get-ChildItem -Recurse -Path $OutDir -Filter $ExeName -File -ErrorAction SilentlyContinue |
-             Select-Object -First 1 | ForEach-Object FullName
-}
+# --- Locate result
+$ExePath = Get-ChildItem -Recurse -Path $OutDir -Filter $ExeName -File -ErrorAction SilentlyContinue |
+           Select-Object -First 1 | ForEach-Object FullName
 
 if ($ExePath) {
   Write-Host "Build OK → $ExePath" -ForegroundColor Green
