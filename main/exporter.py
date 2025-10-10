@@ -16,17 +16,29 @@ from pathlib import Path
 from typing import Dict, List, Union, Optional
 import os
 import logging
+import base64, mimetypes
+
 
 from profiles import get_profile, Profile
 
 ActiveMapOut = Dict[int, Union[List[int], str]]
 
-def _icon_src(num: int, out_dir: Path, profile: Profile) -> Optional[str]:
-    """Resolve relative path to <profile>/<num>.png, or None if missing."""
+def _icon_src(num: int, out_dir: Path, profile: Profile, mode: str = "data") -> Optional[str]:
     p = profile.icon_path(num)
     if not p:
         return None
-    return Path(os.path.relpath(p, out_dir)).as_posix()
+    p = Path(p)
+    if mode == "data":
+        try:
+            b = p.read_bytes()
+        except OSError:
+            return None
+        mime = mimetypes.guess_type(str(p))[0] or "image/png"
+        b64 = base64.b64encode(b).decode("ascii")
+        return f"data:{mime};base64,{b64}"
+    else:
+        return Path(os.path.relpath(p, out_dir)).as_posix()
+
 
 def export_html_stack(mapping: ActiveMapOut,
                       out_html: str | Path = None,
